@@ -1,0 +1,9 @@
+name: pprospector_rpoc
+channels:
+  - defaults
+  - anaconda
+  - bioconda
+dependencies:
+  - anaconda::python=2.7
+  - bioconda::primerprospector=1.0.1
+  - bioconda::raxml=8.2.12
