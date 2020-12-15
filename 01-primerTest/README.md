@@ -12,7 +12,7 @@ After it is installed, activate the environment
 conda activate pprospector_rpoc
 ```
 
-We can now use primer prospector to analyze our different primer sets against a database of curate oral microbes. First let's test our 16S primers (515f/806r).
+We can now use primer prospector to analyze our different primer sets against a database of curated oral microbes. First let's test our 16S primers (515f/806r).
 
 ```bash
 analyze_primers.py -f ~/refDB/vince_oral_genomes/n4584.fnn -p 515f -s GTGCCAGCMGCCGCGGTAA &
@@ -45,23 +45,33 @@ These should take some time to complete and will throw an error message when pri
 16S primers
 
 ```bash
-
+get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
 ```
 
 30S primers
 
 ```bash
-
+get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
 ```
 
 **Streptococcus** rpoC primers
 
 ```bash
-
+get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
 ```
 
 Community rpoC primers
 
 ```bash
+get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
+```
+
+Now we can generate some statistics about these predicted amplicons.
+
+```bash
 
 ```
+
+Finally, generate predicted amplicon trees for each dataset.
+
+
