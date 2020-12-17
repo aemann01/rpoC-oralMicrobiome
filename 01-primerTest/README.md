@@ -12,38 +12,38 @@ After it is installed, activate the environment
 conda activate pprospector_rpoc
 ```
 
-Unzip the database
+Download the HOMD genome reference database
 
 ```bash
-gzip -d n4584.fnn
+wget http://www.homd.org/ftp/HOMD_prokka_genomes/fna/ALL_genomes.fna
 ```
 
-We can now use primer prospector to analyze our different primer sets against a database of curated oral microbes. First let's test our 16S primers (515f/806r).
+We can now use primer prospector to analyze our different primer sets against the HOMD. First let's test our 16S primers (515f/806r).
 
 ```bash
-analyze_primers.py -f n4584.fnn -p 515f -s GTGCCAGCMGCCGCGGTAA &
-analyze_primers.py -f n4584.fnn -p 806r -s GGACTACHVGGGTWTCTAAT &
+analyze_primers.py -f ALL_genomes.fna -p 515f -s GTGCCAGCMGCCGCGGTAA &
+analyze_primers.py -f ALL_genomes.fna -p 806r -s GGACTACHVGGGTWTCTAAT &
 ```
 
 Testing **Streptococcus** specific 30S primers
 
 ```bash
-analyze_primers.py -f n4584.fnn -p Strep30Sf -s ATGTCACGTATYGGTAATAA &
-analyze_primers.py -f n4584.fnn -p Strep30Sr -s WGTYTTACCTTCYTTRMGRCGDA &
+analyze_primers.py -f ALL_genomes.fna -p Strep30Sf -s ATGTCACGTATYGGTAATAA &
+analyze_primers.py -f ALL_genomes.fna -p Strep30Sr -s WGTYTTACCTTCYTTRMGRCGDA &
 ```
 
 Testing **Streptococcus** specific rpoC primers
 
 ```bash
-analyze_primers.py -f n4584.fnn -p rpoCf_strep_VPR-1 -s AAYGARAARCGDATGYTNCARGA &
-analyze_primers.py -f n4584.fnn -p rpoCr_strep_VPR-1 -s GCCATYTGGTCNCCRTCRAA &
+analyze_primers.py -f ALL_genomes.fna -p rpoCStrepf_VPR-1 -s AAYGARAARCGDATGYTNCARGA &
+analyze_primers.py -f ALL_genomes.fna -p rpoCStrepr_VPR-1 -s GCCATYTGGTCNCCRTCRAA &
 ```
 
 Finally, test community rpoC primers
 
 ```bash
-analyze_primers.py -f n4584.fnn -p rpoCf_PLQ_3 -s MAYGARAARMGNATGYTNCARGA &
-analyze_primers.py -f n4584.fnn -p rpoCr_PLQ_1 -s GMCATYTGRTCNCCRTCRAA &
+analyze_primers.py -f ALL_genomes.fna -p rpoCPLQf_3 -s MAYGARAARMGNATGYTNCARGA &
+analyze_primers.py -f ALL_genomes.fna -p rpoCPLQr_1 -s GMCATYTGRTCNCCRTCRAA &
 ```
 
 These should take some time to complete and will throw an error message when primer prospector is supposed to generate figures (this is fine and won't impact downstream analyses). Once they are complete we can get predicted amplicons for each primer set.
@@ -51,25 +51,30 @@ These should take some time to complete and will throw an error message when pri
 16S primers
 
 ```bash
-get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
+get_amplicons_and_reads.py -f ALL_genomes.fna -i 515f_n4584_hits.txt:806r_n4584_hits.txt &
 ```
 
 30S primers
 
 ```bash
-get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
+get_amplicons_and_reads.py -f ALL_genomes.fna -i Strep30Sf_n4584_hits.txt:Strep30Sr_n4584_hits.txt &
 ```
 
 **Streptococcus** rpoC primers
 
 ```bash
-get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
+get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCf_strep_VPR-1_n4584_hits.txt:rpoCr_strep_VPR-1_n4584_hits.txt &
 ```
 
 Community rpoC primers
 
 ```bash
-get_amplicons_and_reads.py -f ~/refDB/vince_oral_genomes/n4584.fnn -i 
+get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCf_PLQ_3_n4584_hits.txt:rpoCr_PLQ_1_n4584_hits.txt &
+```
+
+Generate trees for each predicted amplicon set
+
+```bash
 ```
 
 Now we can generate some statistics about these predicted amplicons.
@@ -78,6 +83,5 @@ Now we can generate some statistics about these predicted amplicons.
 
 ```
 
-Finally, generate predicted amplicon trees for each dataset.
 
 
