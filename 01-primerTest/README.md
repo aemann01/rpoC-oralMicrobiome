@@ -51,25 +51,25 @@ These should take some time to complete and will throw an error message when pri
 16S primers
 
 ```bash
-get_amplicons_and_reads.py -f ALL_genomes.fna -i 515f_n4584_hits.txt:806r_n4584_hits.txt &
+get_amplicons_and_reads.py -f ALL_genomes.fna -i 515f_ALL_genomes_hits.txt:806r_ALL_genomes_hits.txt &
 ```
 
 30S primers
 
 ```bash
-get_amplicons_and_reads.py -f ALL_genomes.fna -i Strep30Sf_n4584_hits.txt:Strep30Sr_n4584_hits.txt &
+get_amplicons_and_reads.py -f ALL_genomes.fna -i Strep30Sf_ALL_genomes_hits.txt:Strep30Sr_ALL_genomes_hits.txt &
 ```
 
 **Streptococcus** rpoC primers
 
 ```bash
-get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCf_strep_VPR-1_n4584_hits.txt:rpoCr_strep_VPR-1_n4584_hits.txt &
+get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCStrepf_VPR-1_ALL_genomes_hits.txt:rpoCStrepr_VPR-1_ALL_genomes_hits.txt &
 ```
 
 Community rpoC primers
 
 ```bash
-get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCf_PLQ_3_n4584_hits.txt:rpoCr_PLQ_1_n4584_hits.txt &
+get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCPLQf_3_ALL_genomes_hits.txt:rpoCPLQr_1_ALL_genomes_hits.txt &
 ```
 
 Generate trees for each predicted amplicon set
