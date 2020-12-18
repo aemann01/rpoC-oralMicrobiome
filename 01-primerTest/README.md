@@ -74,7 +74,24 @@ get_amplicons_and_reads.py -f ALL_genomes.fna -i rpoCPLQf_3_ALL_genomes_hits.txt
 
 Generate trees for each predicted amplicon set
 
+Dereplicate amplicons and align
+
 ```bash
+ls *amplicons.fasta | parallel --gnu 'vsearch --derep_fulllength {} --output {}.derep --sizeout'
+mkdir amplicon_trees
+cd amplicon_trees
+ls ../*amplicons*derep | sed 's/_amplicons.fasta.derep//' | sed 's/..\///' | while read line; do mafft ../$line\_amplicons.fasta.derep > $line.align.fa; done
+```
+
+Modify headers
+
+```bash
+ls *fa | while read line; do sed -i 's/;.*//' $line; done
+```
+
+```bash
+rm *tre
+ls *align.fa | sed 's/.align.fa//' | parallel --gnu 'raxmlHPC-PTHREADS-SSE3 -m GTRCAT -c 25 -e 0.001 -p 31514 -f a -N 100 -x 02938 -n {}.tre -s {}.align.fa'
 ```
 
 Now we can generate some statistics about these predicted amplicons.
@@ -83,5 +100,12 @@ Now we can generate some statistics about these predicted amplicons.
 
 ```
 
+There are currently 775 microbial species in the HOMD, how many species are predicted to be amplified by our different taxa?
+
+Get taxonomy data
+
+```bash
+wget http://www.homd.org/ftp/genomes/PROKKA/current/SEQID_info.txt
+```
 
 
