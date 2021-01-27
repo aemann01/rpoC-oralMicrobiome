@@ -3,8 +3,15 @@
 import subprocess
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--input', help='input gene query file, accession number in 9th field, start in 10th, stop in 11th')
+parser.add_argument('-i', '--input', help='input gene query file')
+parser.add_argument('-s', '--subject', help='enter number of subject accession column')
+parser.add_argument('-fc', '--forwardcord', help='enter number of forward coordinate column')
+parser.add_argument('-rc', '--reversecord', help='enter number of reverse coordinate column')
 args = parser.parse_args()
+
+args.subject = int(args.subject) - 1
+args.forwardcord = int(args.forwardcord) - 1
+args.reversecord = int(args.reversecord) -1
 
 with open(args.input, "r") as f:
     for line in f:
@@ -14,13 +21,13 @@ with open(args.input, "r") as f:
         except IndexError:
             break
         record = line.split("\t")
-        accession = record[1]
-        if int(record[8]) >= int(record[9]):
-            fwdcoord = int(record[9])
-            revcoord = int(record[8])
+        accession = record[args.subject]
+        if int(record[args.forwardcord]) >= int(record[args.reversecord]):
+            fwdcoord = int(record[args.reversecord])
+            revcoord = int(record[args.forwardcord])
         else:
-            fwdcoord = int(record[8])
-            revcoord = int(record[9].rstrip("\n"))
+            fwdcoord = int(record[args.forwardcord])
+            revcoord = int(record[args.reversecord].rstrip("\n"))
         subprocess.check_call(['efetch -db nuccore -id %s \
             -seq_start %s \
             -seq_stop %s \
